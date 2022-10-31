@@ -2,22 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tank : MonoBehaviour
+public class Tank : BaseTank
 {
     // === オブジェクト設定 >>>
-    [SerializeField] public GameObject UpperPoint = null;
+    /*[SerializeField] public GameObject UpperPoint = null;
     [SerializeField] public GameObject CannonPoint = null;
     [SerializeField] public GameObject ShotPoint = null;
     [SerializeField] public GameObject BulletPrefab = null;
+    */
 
-    // === パラメータ設定 >>>
-    [SerializeField] private float _moveSpeed = 5.0f;
-    [SerializeField] private float _rotSpeed = 90.0f;
-    [SerializeField] private float _upperRotSpeed = 90.0f;
-    [SerializeField] private float _cannonRotSpeed = 90.0f;
-    [SerializeField] private float _shotPower = 50.0f;
-    [SerializeField] public CameraManager MainCamera = null;
-
+    
     // Start is called before the first frame update
     
     public class Prameter
@@ -55,37 +49,29 @@ public class Tank : MonoBehaviour
         
         if(Input.GetKey(KeyCode.UpArrow) == true)
         {   // 前進
-            this.transform.Translate(0, 0, deltaMoveSpeed);
+            Shot();
         }
 
         if (Input.GetKey(KeyCode.DownArrow) == true)
         {   // 後退
-            this.transform.Translate(0, 0, -deltaMoveSpeed);
+            Shot();
         }
 
         if (Input.GetKey(KeyCode.LeftArrow) == true)
         {   // 左回転
-            this.transform.Rotate(0, -deltaRotSpeed, 0);
+            Shot();
         }
 
         if (Input.GetKey(KeyCode.RightArrow) == true)
         {   // 右旋回
-            this.transform.Rotate(0, deltaRotSpeed, 0);
+            Shot();
         }
 
 
         // === 射撃 >>>
         if (Input.GetKeyDown(KeyCode.Space) == true)
         {
-            // 複成
-            GameObject bullet = Instantiate(
-                BulletPrefab, ShotPoint.transform.position, this.transform.rotation);
-
-            // 飛ばす
-            bullet.GetComponent<Rigidbody>().AddForce(ShotPoint.transform.forward * _shotPower, ForceMode.Impulse);
-
-            // 削除
-            Destroy(bullet.gameObject, 5);
+           Shot();
         }
         
         //ターゲットの指定
